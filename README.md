@@ -1,69 +1,104 @@
-# zugzug
+<div align="center">
 
-Sound notifications for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Chimes, alerts, and AI voice lines — your choice.
+# ZUG ZUG
 
-Never miss the end of a long task, a permission request, or a failed tool call again.
+**Sound notifications for [Claude Code](https://docs.anthropic.com/en/docs/claude-code)**
 
-## Install
+Never miss the end of a long task, a permission request, or a failed tool call again. Chimes, alerts, and AI voice lines — your choice.
 
-```bash
-npx zugzug
-```
-
-That's it. Open Claude Code and run `/zugzug:setup` to pick your hooks, sounds, and voice.
-
-## Uninstall
+<br>
 
 ```bash
-npx zugzug uninstall
+npx zug_zug
 ```
 
-## Commands
+<br>
 
-| Command | What it does |
-|---------|-------------|
-| `/zugzug:setup` | Interactive setup — pick hooks, sound type, voice character |
-| `/zugzug:mute` | Mute all sounds |
-| `/zugzug:unmute` | Unmute sounds |
+</div>
 
-## How it works
+---
 
-Two sound modes, set via `/zugzug:setup`:
+## What is ZugZug?
 
-- **Instrumental only** — bundled chimes and pings. Works immediately, no setup needed.
-- **AI voice lines** — character voice via [edge-tts](https://github.com/rany2/edge-tts) (free Microsoft TTS). Needs `pip install edge-tts` + internet to generate.
+Claude Code runs in the terminal — no visual cues, no push notifications, no sound. If you step away or switch tabs during a long task, you have no idea when it's done, when it needs approval, or when something breaks.
 
-You can also use **both** — instrumentals + voice lines mixed randomly per hook.
+ZugZug fixes that. It hooks into Claude Code's lifecycle events and plays sounds when things happen:
+
+- **Instrumental chimes** — bundled WAV files that work immediately, no setup needed
+- **AI voice lines** — short, punchy character voice clips generated via [edge-tts](https://github.com/rany2/edge-tts) (free Microsoft TTS)
+- **Both** — instrumentals and voice lines mixed randomly per hook
+- **Fully customizable** — pick which hooks trigger sounds, choose a voice preset and personality tone, or describe your own
+
+## Getting Started
+
+### 1. Install Claude Code (if you haven't already)
+
+```bash
+# macOS / Linux
+curl -fsSL https://claude.ai/install.sh | bash
+
+# Windows (PowerShell)
+irm https://claude.ai/install.ps1 | iex
+```
+
+Verify it's working:
+```bash
+claude --version
+```
+
+> Need help? See the [official setup guide](https://code.claude.com/docs/en/setup).
+
+### 2. Install ZugZug
+
+```bash
+npx zug_zug
+```
+
+ZugZug installs itself as a Claude Code plugin — sounds, scripts, commands, and hooks all set up automatically.
+
+### 3. Configure
+
+Open Claude Code in any project directory and run:
+
+```
+/zugzug:setup
+```
+
+The interactive wizard walks you through picking your hooks, sound type, voice, and personality.
+
+## How It Works
+
+**1. Pick your hooks** — Choose which Claude Code events should play sounds (task complete, permission needed, errors, etc.)
+
+**2. Pick your sound type** — Instrumental chimes, AI voice lines, or both
+
+**3. Pick your voice** — If using voice lines, choose a voice preset and personality tone (sarcastic, grumpy, enthusiastic, dramatic, or describe your own)
+
+**4. Generate** — Claude Code writes custom voice lines and generates WAV files via edge-tts. Done.
 
 ```
 ~/.claude/zugzug/
 ├── sounds/
 │   ├── Stop/               ← random .wav plays when Claude finishes
 │   │   ├── chime.wav
-│   │   └── success.wav
+│   │   └── voice_1.wav
 │   ├── PostToolUseFailure/  ← plays when a tool fails
 │   ├── PermissionRequest/   ← plays when Claude needs approval
 │   └── ...                  ← 14 hook folders total
 └── scripts/
     ├── play-sound.sh        ← picks random file, plays it
-    └── generate_voices.py   ← generate WAVs via edge-tts
+    └── generate_voices.py   ← generates WAVs via edge-tts
 ```
 
-## Voice lines
+## Commands
 
-The `/zugzug:setup` wizard lets you pick a voice and personality tone. Claude Code writes short, punchy voice lines for each hook and generates them as WAV files using [edge-tts](https://github.com/rany2/edge-tts) (free Microsoft TTS).
+Once installed, you have access to these commands in Claude Code:
 
-You can also generate voice lines manually:
+- `/zugzug:setup` — Interactive setup wizard — pick hooks, sound type, voice character
+- `/zugzug:mute` — Mute all sounds
+- `/zugzug:unmute` — Unmute sounds
 
-```bash
-pip install edge-tts
-
-python3 ~/.claude/zugzug/scripts/generate_voices.py \
-  --hooks Stop,PermissionRequest,PostToolUseFailure \
-  --preset male_mid --tone sarcastic --count 3
-```
-
-### Voice presets
+## Voice Presets
 
 | Preset | Voice |
 |--------|-------|
@@ -74,8 +109,8 @@ python3 ~/.claude/zugzug/scripts/generate_voices.py \
 
 ### Personality tones
 
-| Tone | Vibe | Example (Stop hook) |
-|------|------|-------------------|
+| Tone | Vibe | Example |
+|------|------|---------|
 | **sarcastic** | Makes fun of you | "Done. You're welcome." |
 | **grumpy** | Hates everything | "Done. Go away." |
 | **enthusiastic** | Annoyingly excited | "WOOHOO! Done!" |
@@ -84,7 +119,7 @@ python3 ~/.claude/zugzug/scripts/generate_voices.py \
 
 You can also describe a **custom** personality during `/zugzug:setup` and Claude will write voice lines for it.
 
-## Supported hooks
+## Supported Hooks
 
 | Hook | Default sound | When it fires |
 |------|:---:|-------------|
@@ -103,7 +138,7 @@ You can also describe a **custom** personality during `/zugzug:setup` and Claude
 | `PostToolUse` | _(empty)_ | After every tool call |
 | `TeammateIdle` | _(empty)_ | Team member idles |
 
-## Add your own sounds
+## Add Your Own Sounds
 
 Drop any audio file into a hook folder:
 
@@ -115,18 +150,28 @@ Supported formats: `.wav` (recommended), `.mp3`, `.aiff`, `.ogg`
 
 ## Requirements
 
-- **macOS**: Works out of the box (`afplay` is built in)
-- **Linux**: Needs `pulseaudio` or `alsa-utils` for sounds
-- **Voice lines** (optional): `pip install edge-tts` + internet
+- **macOS** — Works out of the box (`afplay` is built in)
+- **Linux** — Needs `pulseaudio` or `alsa-utils` for sounds
+- **Voice lines** (optional) — `pip install edge-tts` + internet
 
-## What `npx zugzug` does
+## Uninstall
 
-1. Copies sounds and scripts to `~/.claude/zugzug/`
-2. Copies commands to `~/.claude/commands/zugzug/`
-3. Adds hooks to `~/.claude/settings.json`
+```bash
+npx zug_zug uninstall
+```
 
-`npx zugzug uninstall` cleanly reverses all three steps.
+Cleanly removes sounds, commands, and hooks from `~/.claude/settings.json`.
 
 ## License
 
-MIT
+MIT © [Alex Levadski](https://github.com/alevadski)
+
+---
+
+<div align="center">
+
+**Congrats, your Claude Code just got voice!**
+
+[Report Bug](https://github.com/alexlevadski/zugzug/issues) · [Request Feature](https://github.com/alexlevadski/zugzug/issues)
+
+</div>

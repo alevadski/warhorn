@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-// Standalone uninstaller — also called by `npx zugzug uninstall`
+// Standalone uninstaller — also called by `npx zug_zug uninstall`
 // Can be run directly: node ~/.claude/zugzug/uninstall.js
 
 const fs = require("fs");

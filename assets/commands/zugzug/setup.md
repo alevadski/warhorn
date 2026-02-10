@@ -310,5 +310,5 @@ Tell the user what was configured and remind them about `/zugzug:mute` and `/zug
 6. Voice lines must be maximum 4 words each
 7. If edge-tts fails → suggest pip3 install --break-system-packages edge-tts
 8. If voice generation fails → keep instrumentals, tell user to retry later
-9. If any script errors → tell user to reinstall with npx zugzug, do NOT rewrite scripts
+9. If any script errors → tell user to reinstall with npx zug_zug, do NOT rewrite scripts
 </critical_rules>

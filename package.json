@@ -1,10 +1,10 @@
 {
-  "name": "zugzug",
+  "name": "zug_zug",
   "version": "1.0.0",
   "description": "Sound notifications for Claude Code — chimes, alerts, and AI voice lines",
   "bin": {
-    "zugzug": "bin/install.js",
-    "zugzug-uninstall": "bin/uninstall.js"
+    "zug_zug": "bin/install.js",
+    "zug_zug-uninstall": "bin/uninstall.js"
   },
   "files": [
     "bin/",

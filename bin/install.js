@@ -161,7 +161,7 @@ function install() {
     `    ${c.cyan}/zugzug:unmute${c.reset}    Re-enable everything`
   );
   console.log(
-    `\n  ${c.dim}npx zugzug uninstall — cleanly remove everything${c.reset}\n`
+    `\n  ${c.dim}npx zug_zug uninstall — cleanly remove everything${c.reset}\n`
   );
 }
 
@@ -174,11 +174,11 @@ if (command === "uninstall" || command === "remove") {
 } else if (command === "help" || command === "--help" || command === "-h") {
   console.log(banner);
   console.log(`  ${c.bold}Usage:${c.reset}`);
-  console.log(`    ${c.cyan}npx zugzug${c.reset}            Install zugzug`);
+  console.log(`    ${c.cyan}npx zug_zug${c.reset}            Install zugzug`);
   console.log(
-    `    ${c.cyan}npx zugzug uninstall${c.reset}  Remove everything cleanly`
+    `    ${c.cyan}npx zug_zug uninstall${c.reset}  Remove everything cleanly`
   );
-  console.log(`    ${c.cyan}npx zugzug help${c.reset}       Show this message\n`);
+  console.log(`    ${c.cyan}npx zug_zug help${c.reset}       Show this message\n`);
 } else {
   install();
 }
