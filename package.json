@@ -1,0 +1,41 @@
+{
+  "name": "zugzug",
+  "version": "1.0.0",
+  "description": "Sound notifications for Claude Code — chimes, alerts, and AI voice lines",
+  "bin": {
+    "zugzug": "bin/install.js",
+    "zugzug-uninstall": "bin/uninstall.js"
+  },
+  "files": [
+    "bin/",
+    "assets/commands/",
+    "assets/scripts/generate_voices.py",
+    "assets/scripts/play-sound.sh",
+    "assets/sounds/",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "claude-code",
+    "claude",
+    "notifications",
+    "sounds",
+    "hooks",
+    "tts",
+    "voice",
+    "cli"
+  ],
+  "author": "Alex Levadski",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexlevadski/zugzug.git"
+  },
+  "homepage": "https://github.com/alexlevadski/zugzug#readme",
+  "bugs": {
+    "url": "https://github.com/alexlevadski/zugzug/issues"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
