@@ -1,6 +1,6 @@
 <div align="center">
 
-# ZUG ZUG
+# WARHORN
 
 **Sound notifications for [Claude Code](https://docs.anthropic.com/en/docs/claude-code)**
 
@@ -9,7 +9,7 @@ Never miss the end of a long task, a permission request, or a failed tool call a
 <br>
 
 ```bash
-npx zug_zug
+npx warhorn
 ```
 
 <br>
@@ -18,11 +18,11 @@ npx zug_zug
 
 ---
 
-## What is ZugZug?
+## What is warhorn?
 
 Claude Code runs in the terminal — no visual cues, no push notifications, no sound. If you step away or switch tabs during a long task, you have no idea when it's done, when it needs approval, or when something breaks.
 
-ZugZug fixes that. It hooks into Claude Code's lifecycle events and plays sounds when things happen:
+warhorn fixes that. It hooks into Claude Code's lifecycle events and plays sounds when things happen:
 
 - **Instrumental chimes** — bundled WAV files that work immediately, no setup needed
 - **AI voice lines** — short, punchy character voice clips generated via [edge-tts](https://github.com/rany2/edge-tts) (free Microsoft TTS)
@@ -48,20 +48,20 @@ claude --version
 
 > Need help? See the [official setup guide](https://code.claude.com/docs/en/setup).
 
-### 2. Install ZugZug
+### 2. Install warhorn
 
 ```bash
-npx zug_zug
+npx warhorn
 ```
 
-ZugZug installs itself as a Claude Code plugin — sounds, scripts, commands, and hooks all set up automatically.
+warhorn installs itself as a Claude Code plugin — sounds, scripts, commands, and hooks all set up automatically.
 
 ### 3. Configure
 
 Open Claude Code in any project directory and run:
 
 ```
-/zugzug:setup
+/warhorn:setup
 ```
 
 The interactive wizard walks you through picking your hooks, sound type, voice, and personality.
@@ -77,7 +77,7 @@ The interactive wizard walks you through picking your hooks, sound type, voice, 
 **4. Generate** — Claude Code writes custom voice lines and generates WAV files via edge-tts. Done.
 
 ```
-~/.claude/zugzug/
+~/.claude/warhorn/
 ├── sounds/
 │   ├── Stop/               ← random .wav plays when Claude finishes
 │   │   ├── chime.wav
@@ -94,9 +94,9 @@ The interactive wizard walks you through picking your hooks, sound type, voice, 
 
 Once installed, you have access to these commands in Claude Code:
 
-- `/zugzug:setup` — Interactive setup wizard — pick hooks, sound type, voice character
-- `/zugzug:mute` — Mute all sounds
-- `/zugzug:unmute` — Unmute sounds
+- `/warhorn:setup` — Interactive setup wizard — pick hooks, sound type, voice character
+- `/warhorn:mute` — Mute all sounds
+- `/warhorn:unmute` — Unmute sounds
 
 ## Voice Presets
 
@@ -117,7 +117,7 @@ Once installed, you have access to these commands in Claude Code:
 | **informational** | Just the facts | "Response complete." |
 | **dramatic** | Over the top epic | "The quest is complete!" |
 
-You can also describe a **custom** personality during `/zugzug:setup` and Claude will write voice lines for it.
+You can also describe a **custom** personality during `/warhorn:setup` and Claude will write voice lines for it.
 
 ## Supported Hooks
 
@@ -143,7 +143,7 @@ You can also describe a **custom** personality during `/zugzug:setup` and Claude
 Drop any audio file into a hook folder:
 
 ```bash
-cp ~/my-sound.wav ~/.claude/zugzug/sounds/Stop/
+cp ~/my-sound.wav ~/.claude/warhorn/sounds/Stop/
 ```
 
 Supported formats: `.wav` (recommended), `.mp3`, `.aiff`, `.ogg`
@@ -157,7 +157,7 @@ Supported formats: `.wav` (recommended), `.mp3`, `.aiff`, `.ogg`
 ## Uninstall
 
 ```bash
-npx zug_zug uninstall
+npx warhorn uninstall
 ```
 
 Cleanly removes sounds, commands, and hooks from `~/.claude/settings.json`.
@@ -172,6 +172,6 @@ MIT © [Alex Levadski](https://github.com/alevadski)
 
 **Congrats, your Claude Code just got voice!**
 
-[Report Bug](https://github.com/alexlevadski/zugzug/issues) · [Request Feature](https://github.com/alexlevadski/zugzug/issues)
+[Report Bug](https://github.com/alexlevadski/warhorn/issues) · [Request Feature](https://github.com/alexlevadski/warhorn/issues)
 
 </div>

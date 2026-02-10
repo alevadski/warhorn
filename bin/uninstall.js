@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-// Standalone uninstaller — also called by `npx zug_zug uninstall`
-// Can be run directly: node ~/.claude/zugzug/uninstall.js
+// Standalone uninstaller — also called by `npx warhorn uninstall`
+// Can be run directly: node ~/.claude/warhorn/uninstall.js
 
 const fs = require("fs");
 const path = require("path");
@@ -21,9 +21,9 @@ const c = {
 
 const CLAUDE_DIR =
   process.env.CLAUDE_CONFIG_DIR || path.join(os.homedir(), ".claude");
-const ZUGZUG_DIR = path.join(CLAUDE_DIR, "zugzug");
-const COMMANDS_DIR = path.join(CLAUDE_DIR, "commands", "zugzug");
-const SKILLS_DIR = path.join(CLAUDE_DIR, "skills", "zugzug-talk");
+const WARHORN_DIR = path.join(CLAUDE_DIR, "warhorn");
+const COMMANDS_DIR = path.join(CLAUDE_DIR, "commands", "warhorn");
+const SKILLS_DIR = path.join(CLAUDE_DIR, "skills", "warhorn-talk");
 const SETTINGS_FILE = path.join(CLAUDE_DIR, "settings.json");
 
 const HOOKS = [
@@ -64,12 +64,12 @@ function writeJSON(filepath, data) {
 const banner =
   "\n" +
   c.red +
-  "   ███████╗██╗   ██╗ ██████╗ ███████╗██╗   ██╗ ██████╗\n" +
-  "   ╚══███╔╝██║   ██║██╔════╝ ╚══███╔╝██║   ██║██╔════╝\n" +
-  "     ███╔╝ ██║   ██║██║  ███╗  ███╔╝ ██║   ██║██║  ███╗\n" +
-  "    ███╔╝  ██║   ██║██║   ██║ ███╔╝  ██║   ██║██║   ██║\n" +
-  "   ███████╗╚██████╔╝╚██████╔╝███████╗╚██████╔╝╚██████╔╝\n" +
-  "   ╚══════╝ ╚═════╝  ╚═════╝ ╚══════╝ ╚═════╝  ╚═════╝" +
+  "   ██╗    ██╗ █████╗ ██████╗ ██╗  ██╗ ██████╗ ██████╗ ███╗   ██╗\n" +
+  "   ██║    ██║██╔══██╗██╔══██╗██║  ██║██╔═══██╗██╔══██╗████╗  ██║\n" +
+  "   ██║ █╗ ██║███████║██████╔╝███████║██║   ██║██████╔╝██╔██╗ ██║\n" +
+  "   ██║███╗██║██╔══██║██╔══██╗██╔══██║██║   ██║██╔══██╗██║╚██╗██║\n" +
+  "   ╚███╔███╔╝██║  ██║██║  ██║██║  ██║╚██████╔╝██║  ██║██║ ╚████║\n" +
+  "    ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝" +
   c.reset +
   "\n\n" +
   `   ${c.dim}Uninstalling...${c.reset}\n`;
@@ -79,19 +79,19 @@ const banner =
 function uninstall() {
   console.log(banner);
 
-  // 1. Remove ~/.claude/zugzug/
-  if (fs.existsSync(ZUGZUG_DIR)) {
-    fs.rmSync(ZUGZUG_DIR, { recursive: true });
+  // 1. Remove ~/.claude/warhorn/
+  if (fs.existsSync(WARHORN_DIR)) {
+    fs.rmSync(WARHORN_DIR, { recursive: true });
     ok("Removed sounds, scripts & config");
   }
 
-  // 2. Remove ~/.claude/commands/zugzug/
+  // 2. Remove ~/.claude/commands/warhorn/
   if (fs.existsSync(COMMANDS_DIR)) {
     fs.rmSync(COMMANDS_DIR, { recursive: true });
     ok("Removed commands");
   }
 
-  // 3. Remove ~/.claude/skills/zugzug-talk/
+  // 3. Remove ~/.claude/skills/warhorn-talk/
   if (fs.existsSync(SKILLS_DIR)) {
     fs.rmSync(SKILLS_DIR, { recursive: true });
     ok("Removed skills");
@@ -106,7 +106,7 @@ function uninstall() {
         if (settings.hooks[hook]) {
           const before = settings.hooks[hook].length;
           settings.hooks[hook] = settings.hooks[hook].filter(
-            (h) => !h.hooks?.some((inner) => inner.command?.includes("zugzug"))
+            (h) => !h.hooks?.some((inner) => inner.command?.includes("warhorn"))
           );
           removed += before - settings.hooks[hook].length;
           if (settings.hooks[hook].length === 0) {
@@ -126,8 +126,8 @@ function uninstall() {
   const claudeMd = path.join(CLAUDE_DIR, "CLAUDE.md");
   if (fs.existsSync(claudeMd)) {
     let content = fs.readFileSync(claudeMd, "utf8");
-    const startTag = "<!-- zugzug:personality:start -->";
-    const endTag = "<!-- zugzug:personality:end -->";
+    const startTag = "<!-- warhorn:personality:start -->";
+    const endTag = "<!-- warhorn:personality:end -->";
     const startIdx = content.indexOf(startTag);
     const endIdx = content.indexOf(endTag);
     if (startIdx !== -1 && endIdx !== -1) {
@@ -141,7 +141,7 @@ function uninstall() {
   }
 
   console.log(
-    `\n  ${c.green}${c.bold}Uninstalled.${c.reset} Goodbye! ${c.dim}...work work${c.reset}\n`
+    `\n  ${c.green}${c.bold}Uninstalled.${c.reset} Goodbye! ${c.dim}...the horn falls silent${c.reset}\n`
   );
 }
 

@@ -1,10 +1,10 @@
 {
-  "name": "zug_zug",
+  "name": "warhorn",
   "version": "1.0.0",
   "description": "Sound notifications for Claude Code — chimes, alerts, and AI voice lines",
   "bin": {
-    "zug_zug": "bin/install.js",
-    "zug_zug-uninstall": "bin/uninstall.js"
+    "warhorn": "bin/install.js",
+    "warhorn-uninstall": "bin/uninstall.js"
   },
   "files": [
     "bin/",
@@ -29,11 +29,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alexlevadski/zugzug.git"
+    "url": "git+https://github.com/alexlevadski/warhorn.git"
   },
-  "homepage": "https://github.com/alexlevadski/zugzug#readme",
+  "homepage": "https://github.com/alexlevadski/warhorn#readme",
   "bugs": {
-    "url": "https://github.com/alexlevadski/zugzug/issues"
+    "url": "https://github.com/alexlevadski/warhorn/issues"
   },
   "engines": {
     "node": ">=16.0.0"

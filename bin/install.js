@@ -20,8 +20,8 @@ const pkg = require("../package.json");
 
 const CLAUDE_DIR =
   process.env.CLAUDE_CONFIG_DIR || path.join(os.homedir(), ".claude");
-const ZUGZUG_DIR = path.join(CLAUDE_DIR, "zugzug");
-const COMMANDS_DIR = path.join(CLAUDE_DIR, "commands", "zugzug");
+const WARHORN_DIR = path.join(CLAUDE_DIR, "warhorn");
+const COMMANDS_DIR = path.join(CLAUDE_DIR, "commands", "warhorn");
 const SETTINGS_FILE = path.join(CLAUDE_DIR, "settings.json");
 const ASSETS_DIR = path.join(__dirname, "..", "assets");
 
@@ -47,14 +47,14 @@ const HOOKS = [
 const banner =
   "\n" +
   c.green +
-  "   ███████╗██╗   ██╗ ██████╗ ███████╗██╗   ██╗ ██████╗\n" +
-  "   ╚══███╔╝██║   ██║██╔════╝ ╚══███╔╝██║   ██║██╔════╝\n" +
-  "     ███╔╝ ██║   ██║██║  ███╗  ███╔╝ ██║   ██║██║  ███╗\n" +
-  "    ███╔╝  ██║   ██║██║   ██║ ███╔╝  ██║   ██║██║   ██║\n" +
-  "   ███████╗╚██████╔╝╚██████╔╝███████╗╚██████╔╝╚██████╔╝\n" +
-  "   ╚══════╝ ╚═════╝  ╚═════╝ ╚══════╝ ╚═════╝  ╚═════╝" +
+  "   ██╗    ██╗ █████╗ ██████╗ ██╗  ██╗ ██████╗ ██████╗ ███╗   ██╗\n" +
+  "   ██║    ██║██╔══██╗██╔══██╗██║  ██║██╔═══██╗██╔══██╗████╗  ██║\n" +
+  "   ██║ █╗ ██║███████║██████╔╝███████║██║   ██║██████╔╝██╔██╗ ██║\n" +
+  "   ██║███╗██║██╔══██║██╔══██╗██╔══██║██║   ██║██╔══██╗██║╚██╗██║\n" +
+  "   ╚███╔███╔╝██║  ██║██║  ██║██║  ██║╚██████╔╝██║  ██║██║ ╚████║\n" +
+  "    ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝" +
   c.reset + "\n" +
-  `${c.dim}${`v${pkg.version}`.padStart(54)}${c.reset}\n`;
+  `${c.dim}${`v${pkg.version}`.padStart(64)}${c.reset}\n`;
 
 // ─── Helpers ─────────────────────────────────────
 
@@ -99,26 +99,26 @@ function install() {
   info(`Installing to ${installDir}\n`);
 
   // 1. Sounds, scripts & config
-  copyDirSync(path.join(ASSETS_DIR, "sounds"), path.join(ZUGZUG_DIR, "sounds"));
-  copyDirSync(path.join(ASSETS_DIR, "scripts"), path.join(ZUGZUG_DIR, "scripts"));
-  fs.chmodSync(path.join(ZUGZUG_DIR, "scripts", "play-sound.sh"), 0o755);
+  copyDirSync(path.join(ASSETS_DIR, "sounds"), path.join(WARHORN_DIR, "sounds"));
+  copyDirSync(path.join(ASSETS_DIR, "scripts"), path.join(WARHORN_DIR, "scripts"));
+  fs.chmodSync(path.join(WARHORN_DIR, "scripts", "play-sound.sh"), 0o755);
 
   const soundCount = fs
-    .readdirSync(path.join(ZUGZUG_DIR, "sounds"), { recursive: true })
+    .readdirSync(path.join(WARHORN_DIR, "sounds"), { recursive: true })
     .filter((f) => f.endsWith(".wav")).length;
 
   ok(`Installed ${soundCount} sounds & scripts`);
 
   // 2. Commands
-  copyDirSync(path.join(ASSETS_DIR, "commands", "zugzug"), COMMANDS_DIR);
-  ok(`Installed commands ${c.dim}(/zugzug:setup, /zugzug:mute, /zugzug:unmute)${c.reset}`);
+  copyDirSync(path.join(ASSETS_DIR, "commands", "warhorn"), COMMANDS_DIR);
+  ok(`Installed commands ${c.dim}(/warhorn:setup, /warhorn:mute, /warhorn:unmute)${c.reset}`);
 
   // 3. Hooks
   fs.mkdirSync(CLAUDE_DIR, { recursive: true });
   const settings = readJSON(SETTINGS_FILE);
   if (!settings.hooks) settings.hooks = {};
 
-  const scriptRef = path.join(ZUGZUG_DIR, "scripts", "play-sound.sh");
+  const scriptRef = path.join(WARHORN_DIR, "scripts", "play-sound.sh");
   let hooksAdded = 0;
 
   for (const hook of HOOKS) {
@@ -130,10 +130,10 @@ function install() {
       settings.hooks[hook] = [hookEntry];
       hooksAdded++;
     } else {
-      const hasZugzug = settings.hooks[hook].some((h) =>
-        h.hooks?.some((inner) => inner.command?.includes("zugzug"))
+      const hasWarhorn = settings.hooks[hook].some((h) =>
+        h.hooks?.some((inner) => inner.command?.includes("warhorn"))
       );
-      if (!hasZugzug) {
+      if (!hasWarhorn) {
         settings.hooks[hook].push(hookEntry);
         hooksAdded++;
       }
@@ -148,20 +148,20 @@ function install() {
     `\n  ${c.green}Congrats, your Claude Code just got voice!${c.reset}`
   );
   console.log(
-    `  Open Claude Code and run ${c.cyan}/zugzug:setup${c.reset}\n`
+    `  Open Claude Code and run ${c.cyan}/warhorn:setup${c.reset}\n`
   );
   console.log(`  ${c.bold}Commands:${c.reset}`);
   console.log(
-    `    ${c.cyan}/zugzug:setup${c.reset}     Interactive setup wizard`
+    `    ${c.cyan}/warhorn:setup${c.reset}     Interactive setup wizard`
   );
   console.log(
-    `    ${c.cyan}/zugzug:mute${c.reset}      Silence all sounds`
+    `    ${c.cyan}/warhorn:mute${c.reset}      Silence all sounds`
   );
   console.log(
-    `    ${c.cyan}/zugzug:unmute${c.reset}    Re-enable everything`
+    `    ${c.cyan}/warhorn:unmute${c.reset}    Re-enable everything`
   );
   console.log(
-    `\n  ${c.dim}npx zug_zug uninstall — cleanly remove everything${c.reset}\n`
+    `\n  ${c.dim}npx warhorn uninstall — cleanly remove everything${c.reset}\n`
   );
 }
 
@@ -174,11 +174,11 @@ if (command === "uninstall" || command === "remove") {
 } else if (command === "help" || command === "--help" || command === "-h") {
   console.log(banner);
   console.log(`  ${c.bold}Usage:${c.reset}`);
-  console.log(`    ${c.cyan}npx zug_zug${c.reset}            Install zugzug`);
+  console.log(`    ${c.cyan}npx warhorn${c.reset}            Install warhorn`);
   console.log(
-    `    ${c.cyan}npx zug_zug uninstall${c.reset}  Remove everything cleanly`
+    `    ${c.cyan}npx warhorn uninstall${c.reset}  Remove everything cleanly`
   );
-  console.log(`    ${c.cyan}npx zug_zug help${c.reset}       Show this message\n`);
+  console.log(`    ${c.cyan}npx warhorn help${c.reset}       Show this message\n`);
 } else {
   install();
 }

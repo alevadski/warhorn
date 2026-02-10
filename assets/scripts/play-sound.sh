@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # ───────────────────────────────────────────────────
-# zugzug: play a random sound for a hook event
+# warhorn: play a random sound for a hook event
 #
 # Usage: play-sound.sh <HookName>
 #
-# Looks in ~/.claude/zugzug/sounds/<HookName>/ for audio files.
+# Looks in ~/.claude/warhorn/sounds/<HookName>/ for audio files.
 # Picks one at random. Empty folder → silence.
 # .muted file → silence. Skips if another sound is playing.
 # ───────────────────────────────────────────────────
@@ -15,15 +15,15 @@ if [ -z "$HOOK_NAME" ]; then
   exit 0
 fi
 
-ZUGZUG_ROOT="$HOME/.claude/zugzug"
+WARHORN_ROOT="$HOME/.claude/warhorn"
 
 # Check mute
-if [ -f "$ZUGZUG_ROOT/.muted" ]; then
+if [ -f "$WARHORN_ROOT/.muted" ]; then
   exit 0
 fi
 
-# No overlap: skip if another zugzug sound is still playing
-LOCK_FILE="$ZUGZUG_ROOT/.playing"
+# No overlap: skip if another warhorn sound is still playing
+LOCK_FILE="$WARHORN_ROOT/.playing"
 if [ -f "$LOCK_FILE" ]; then
   LOCK_PID=$(cat "$LOCK_FILE" 2>/dev/null)
   if [ -n "$LOCK_PID" ] && kill -0 "$LOCK_PID" 2>/dev/null; then
@@ -32,7 +32,7 @@ if [ -f "$LOCK_FILE" ]; then
   rm -f "$LOCK_FILE"
 fi
 
-SOUNDS_DIR="$ZUGZUG_ROOT/sounds/${HOOK_NAME}"
+SOUNDS_DIR="$WARHORN_ROOT/sounds/${HOOK_NAME}"
 
 # No folder → silence
 if [ ! -d "$SOUNDS_DIR" ]; then
@@ -64,10 +64,10 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
     aplay -q "$SOUND_FILE" &
     echo $! > "$LOCK_FILE"
   else
-    echo "zugzug: no audio player found (install pulseaudio or alsa-utils)" >&2
+    echo "warhorn: no audio player found (install pulseaudio or alsa-utils)" >&2
   fi
 else
-  echo "zugzug: unsupported OS ($OSTYPE) — see README for supported platforms" >&2
+  echo "warhorn: unsupported OS ($OSTYPE) — see README for supported platforms" >&2
 fi
 
 exit 0

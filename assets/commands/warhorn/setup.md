@@ -1,14 +1,14 @@
 ---
-name: zugzug:setup
-description: Configure zugzug sound notifications
+name: warhorn:setup
+description: Configure warhorn sound notifications
 allowed-tools:
   - AskUserQuestion
   - Bash
 ---
 
 <objective>
-Configure zugzug sound notifications. Interview the user about their preferences, then apply the configuration.
-NEVER modify, overwrite, or recreate ANY files in ~/.claude/zugzug/scripts/. Those scripts are pre-installed. Only CALL them.
+Configure warhorn sound notifications. Interview the user about their preferences, then apply the configuration.
+NEVER modify, overwrite, or recreate ANY files in ~/.claude/warhorn/scripts/. Those scripts are pre-installed. Only CALL them.
 </objective>
 
 <process>
@@ -17,7 +17,7 @@ NEVER modify, overwrite, or recreate ANY files in ~/.claude/zugzug/scripts/. Tho
 
 Display:
 ```
-Let's configure zugzug! I'll ask a few quick questions.
+Let's configure warhorn! I'll ask a few quick questions.
 ```
 
 Use the AskUserQuestion tool:
@@ -205,7 +205,7 @@ python3 -c "
 import json, os
 
 settings_path = os.path.expanduser('~/.claude/settings.json')
-script = os.path.expanduser('~/.claude/zugzug/scripts/play-sound.sh')
+script = os.path.expanduser('~/.claude/warhorn/scripts/play-sound.sh')
 
 try:
     settings = json.load(open(settings_path))
@@ -225,12 +225,12 @@ for hook in all_hooks:
         if hook not in settings['hooks']:
             settings['hooks'][hook] = [entry]
         else:
-            has_zz = any(h.get('hooks') and any('zugzug' in (i.get('command','')) for i in h['hooks']) for h in settings['hooks'][hook])
+            has_zz = any(h.get('hooks') and any('warhorn' in (i.get('command','')) for i in h['hooks']) for h in settings['hooks'][hook])
             if not has_zz:
                 settings['hooks'][hook].append(entry)
     else:
         if hook in settings['hooks']:
-            settings['hooks'][hook] = [h for h in settings['hooks'][hook] if not (h.get('hooks') and any('zugzug' in (i.get('command','')) for i in h['hooks']))]
+            settings['hooks'][hook] = [h for h in settings['hooks'][hook] if not (h.get('hooks') and any('warhorn' in (i.get('command','')) for i in h['hooks']))]
             if not settings['hooks'][hook]:
                 del settings['hooks'][hook]
 
@@ -264,18 +264,18 @@ The lines must match the chosen tone. Examples for "sarcastic" tone:
 Write the JSON and generate:
 
 ```bash
-ZUGZUG_ROOT="$HOME/.claude/zugzug"
-cat > "$ZUGZUG_ROOT/custom_lines.json" << 'LINES_EOF'
+WARHORN_ROOT="$HOME/.claude/warhorn"
+cat > "$WARHORN_ROOT/custom_lines.json" << 'LINES_EOF'
 {
   "Stop": ["line1", "line2", "line3", ...],
   "PermissionRequest": ["line1", "line2", ...],
   ...
 }
 LINES_EOF
-python3 "$ZUGZUG_ROOT/scripts/generate_voices.py" \
+python3 "$WARHORN_ROOT/scripts/generate_voices.py" \
   --hooks "<comma-separated enabled hooks>" \
   --preset <chosen_preset> \
-  --lines-file "$ZUGZUG_ROOT/custom_lines.json" \
+  --lines-file "$WARHORN_ROOT/custom_lines.json" \
   --count <variation_count>
 ```
 
@@ -285,19 +285,19 @@ If voice generation fails, tell the user and keep instrumentals.
 
 If voice-only (no instrumentals), remove bundled sounds:
 ```bash
-find "$ZUGZUG_ROOT/sounds" -maxdepth 2 -type f \( -name "*.wav" -o -name "*.mp3" \) ! -name "voice_*" -delete
+find "$WARHORN_ROOT/sounds" -maxdepth 2 -type f \( -name "*.wav" -o -name "*.mp3" \) ! -name "voice_*" -delete
 ```
 
 ### 5c. Unmute and test
 
 ```bash
-rm -f "$HOME/.claude/zugzug/.muted"
-"$HOME/.claude/zugzug/scripts/play-sound.sh" Stop
+rm -f "$HOME/.claude/warhorn/.muted"
+"$HOME/.claude/warhorn/scripts/play-sound.sh" Stop
 ```
 
 ### 5d. Summary
 
-Tell the user what was configured and remind them about `/zugzug:mute` and `/zugzug:unmute`.
+Tell the user what was configured and remind them about `/warhorn:mute` and `/warhorn:unmute`.
 
 </process>
 
@@ -305,10 +305,10 @@ Tell the user what was configured and remind them about `/zugzug:mute` and `/zug
 1. ONE question at a time — never ask multiple questions in same message
 2. WAIT for answers — don't proceed until they respond
 3. Use AskUserQuestion tool — for every question with predefined options
-4. NEVER modify files in ~/.claude/zugzug/scripts/ — only CALL them
+4. NEVER modify files in ~/.claude/warhorn/scripts/ — only CALL them
 5. Always write voice lines yourself as JSON — never use --tone flag, always use --lines-file
 6. Voice lines must be maximum 4 words each
 7. If edge-tts fails → suggest pip3 install --break-system-packages edge-tts
 8. If voice generation fails → keep instrumentals, tell user to retry later
-9. If any script errors → tell user to reinstall with npx zug_zug, do NOT rewrite scripts
+9. If any script errors → tell user to reinstall with npx warhorn, do NOT rewrite scripts
 </critical_rules>

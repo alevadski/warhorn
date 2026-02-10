@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-zugzug voice line generator.
+warhorn voice line generator.
 
 Generates AI voice lines for Claude Code hook events using edge-tts (free, no API key).
 
@@ -397,7 +397,7 @@ async def generate_line(text, voice, pitch, rate, output_path):
 
 
 async def main():
-    parser = argparse.ArgumentParser(description="Generate zugzug voice lines")
+    parser = argparse.ArgumentParser(description="Generate warhorn voice lines")
     parser.add_argument("--hooks", type=str, default=None,
                         help="Comma-separated hook names (e.g., Stop,PermissionRequest)")
     parser.add_argument("--voice", type=str, default=None,
@@ -432,7 +432,7 @@ async def main():
         return
 
     if args.list_voices:  # noqa: SIM102
-        print("Popular voices for zugzug:")
+        print("Popular voices for warhorn:")
         print("  en-AU-WilliamNeural   — Australian male (deep, gruff)")
         print("  en-GB-RyanNeural      — British male (mid, versatile)")
         print("  en-GB-ThomasNeural    — British male (deeper)")
