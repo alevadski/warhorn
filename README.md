@@ -2,7 +2,7 @@
 
 # WARHORN
 
-**Sound notifications for [Claude Code](https://docs.anthropic.com/en/docs/claude-code)**
+**Give your [Claude Code](https://docs.anthropic.com/en/docs/claude-code) a Voice**
 
 Never miss the end of a long task, a permission request, or a failed tool call again. Chimes, alerts, and AI voice lines — your choice.
 
@@ -13,6 +13,8 @@ npx warhorn
 ```
 
 <br>
+
+![Installation](./assets/images/installation.png)
 
 </div>
 
